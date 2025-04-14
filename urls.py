@@ -139,7 +139,7 @@ urlpatterns = [
     path('create-or-get-venue/', CreateOrGetVenueView.as_view(), name='create-or-get-venue'),
 
     #44
-    path('complaint_event-detail/<int:user_id>/<int:event_id>/', EventDetailView.as_view(), name='event-detail'),
+    path('complaint_event-detail/<int:user_id>/<int:event_id>/', EventDetailComplaintView.as_view(), name='event-detail'),
 
 
     
