@@ -132,7 +132,9 @@ urlpatterns = [
     #41
     path('events/filter/<int:filter_type>/', FilteredEventListView.as_view(), name='filtered-events'),
 
-
+    #42
+    path('organizer/<int:organizer_id>/low-performance-events/', LowPerformanceEventsView.as_view(), name='low-performance-events'),
+ 
 
 
 
