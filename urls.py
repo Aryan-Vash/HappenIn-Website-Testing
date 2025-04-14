@@ -123,6 +123,9 @@ urlpatterns = [
     #38
     path('admin/<int:admin_id>/organizer-complaints/', ComplaintsUnderAdminView.as_view(), name='admin-organizer-complaints'),
 
+    #39
+    path('top-attendees/<int:staff_id>/', TopAttendeesView.as_view(), name='top-attendees'),
+
 
 
 
