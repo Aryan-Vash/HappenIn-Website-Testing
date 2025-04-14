@@ -899,3 +899,23 @@ class EventAttendeesView(APIView):
             })
 
         return Response({"event_id": event_id, "attendees": attendees_data}, status=status.HTTP_200_OK)
+
+
+#41
+class FilteredEventListView(APIView):
+    def get(self, request, filter_type):
+        today = date.today()
+
+        if filter_type == 1:
+            events = Event.objects.filter(startDate=today)
+        elif filter_type == 2:
+            upcoming_date = today + timedelta(days=7)
+            events = Event.objects.filter(startDate__gt=today, startDate__lte=upcoming_date)
+        elif filter_type == 3:
+            upcoming_date = today + timedelta(days=30)
+            events = Event.objects.filter(startDate__gt=today, startDate__lte=upcoming_date)
+        else:
+            return Response({"error": "Invalid filter. Use 1 (today), 2 (in 7 days), or 3 (in 30 days)."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = EventListSerializer(events, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
