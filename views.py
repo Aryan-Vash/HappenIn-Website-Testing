@@ -868,3 +868,34 @@ class TopAttendeesView(APIView):
 
         serializer = TopUserSerializer(top_users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+#40
+class EventAttendeesView(APIView):
+    def get(self, request, event_id):
+        try:
+            event = Event.objects.get(pk=event_id)
+        except Event.DoesNotExist:
+            return Response({"error": "Event not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        registrations = Registration.objects.filter(event=event, transaction__status='Processed')
+
+        attendees_data = []
+        for reg in registrations:
+            user = reg.user
+            transaction = reg.transaction
+
+            # Default to 1 if ticket is free or price is zero
+            if event.ticketPrice == 0:
+                num_tickets = 1
+            else:
+                num_tickets = int(transaction.amount / event.ticketPrice) if transaction and event.ticketPrice > 0 else 0
+
+            attendees_data.append({
+                "user_id": user.id,
+                "username": user.username,
+                "full_name": f"{user.firstName} {user.lastName or ''}".strip(),
+                "num_tickets": num_tickets
+            })
+
+        return Response({"event_id": event_id, "attendees": attendees_data}, status=status.HTTP_200_OK)
