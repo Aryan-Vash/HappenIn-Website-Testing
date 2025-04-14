@@ -656,5 +656,20 @@ class VenueSerializer(serializers.ModelSerializer):
             state=data['state'],
             pincode=data['pincode']
         ).exists():
+
+
             raise serializers.ValidationError("Venue with these details already exists.")
         return data
+
+#44
+class EventDetailSerializer(serializers.ModelSerializer):
+    venue_location = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Event
+        fields = ['eventName', 'startDate', 'ticketPrice', 'status', 'venue_location']
+
+    def get_venue_location(self, obj):
+        if obj.venue:
+            return f"{obj.venue.name}, {obj.venue.street}, {obj.venue.city}, {obj.venue.state}, {obj.venue.pincode}"
+        return "No venue assigned"
