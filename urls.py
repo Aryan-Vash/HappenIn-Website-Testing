@@ -117,7 +117,8 @@ urlpatterns = [
     #36
     path('organizer/<int:organiser_id>/event-stats/', OrganizerEventStatsView.as_view(), name='organizer-event-stats'),
 
-
+    #37
+    path('event/<int:event_id>/rating/', EventRatingView.as_view(), name='event-average-rating'),
 
 
 
