@@ -623,3 +623,9 @@ class EventAttendeeWithTicketsSerializer(serializers.Serializer):
     firstName = serializers.CharField()
     lastName = serializers.CharField()
     num_tickets = serializers.IntegerField()
+
+#41
+class EventListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = '__all__'
