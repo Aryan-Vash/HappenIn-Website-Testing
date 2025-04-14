@@ -625,3 +625,25 @@
 - Example: Visit `http://127.0.0.1:8000/api/event/1/registrations/` to get all registrations for event 1
 
 
+### 36. Organizer Event Statistics
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/organizer/<organiser_id>/event-stats/`
+- Description: Retrieves statistics about past events organized by a specific organizer.
+
+**Detailed View:**
+- Complete URL: `http://127.0.0.1:8000/api/organizer/1/event-stats/`
+- Method: GET
+- Input Parameters:
+  - `organiser_id` (path parameter): ID of the organizer
+- Response: Returns the average percentage of tickets sold for past events
+  ```json
+  {
+    "organizer_id": 1,
+    "average_percentage_sold": 75.5
+  }
+  ```
+- Example Usage:
+  - Visit: `http://127.0.0.1:8000/api/organizer/1/event-stats/`
+  - Response will show the average percentage of tickets sold for all past events organized by the specified organizer
+
+
