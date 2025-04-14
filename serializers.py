@@ -589,3 +589,10 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Registration
         fields = ['id', 'username', 'email', 'contact']
+
+#36
+class AverageTicketsSoldSerializer(serializers.Serializer):
+    organizer_id = serializers.IntegerField()
+    average_percentage_sold = serializers.FloatField()
+
+
