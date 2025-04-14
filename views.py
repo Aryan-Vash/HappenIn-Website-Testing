@@ -750,3 +750,22 @@ class UpdateEventView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+#35
+class EventRegistrationView(APIView):
+    def get(self, request, event_id):
+        try:
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        registrations = Registration.objects.filter(event=event)
+        total_registrations = registrations.count()
+        serializer = EventRegistrationSerializer(registrations, many=True)
+
+        return Response({
+            "event": event.eventName,
+            "total_registrations": total_registrations,
+            "registrations": serializer.data
+        })
