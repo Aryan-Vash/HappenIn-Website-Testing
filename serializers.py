@@ -660,3 +660,9 @@ class EventDetailCSerializer(serializers.ModelSerializer):
         if obj.venue:
             return f"{obj.venue.name}, {obj.venue.street}, {obj.venue.city}, {obj.venue.state}, {obj.venue.pincode}"
         return "No venue assigned"
+
+#44
+class UserNameSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    firstName = serializers.CharField()
+    lastName = serializers.CharField(allow_null=True, allow_blank=True)
