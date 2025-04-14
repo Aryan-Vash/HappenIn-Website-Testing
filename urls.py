@@ -138,6 +138,9 @@ urlpatterns = [
     #43
     path('create-venue/', CreateVenueView.as_view(), name='create-venue'),
 
+    #44
+    path('complaint_event-detail/<int:user_id>/<int:event_id>/', EventDetailView.as_view(), name='event-detail'),
+
 
     
 ]
