@@ -981,7 +981,7 @@ class EventDetailComplaintView(APIView):
     def get(self, request, user_id, event_id):
         try:
             event = Event.objects.get(id=event_id)
-            serializer = EventDetailSerializer(event)
+            serializer = EventDetailCSerializer(event)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Event.DoesNotExist:
             return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
