@@ -637,28 +637,37 @@ class UserComplaintHistoryView(APIView):
 
 
 #31
-class EventRevenueAPIView(APIView):
-    def get(self, request, event_id):
+class OrganizerRevenueStatsView(APIView):
+    def get(self, request, organizer_id):
         try:
-            event = Event.objects.get(id=event_id)
-        except Event.DoesNotExist:
-            return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
+            organizer = Organizer.objects.get(id=organizer_id)
+        except Organizer.DoesNotExist:
+            return Response({"error": "Organizer not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        # Compute revenue
-        ticket_price = event.ticketPrice
-        tickets_sold = event.ticketsSold
-        total_revenue = ticket_price * tickets_sold
+        # Get all events for the organizer
+        events = Event.objects.filter(organizer=organizer)
 
-        data = {
-            "event_id": event.id,
-            "event_name": event.eventName,
-            "ticket_price": ticket_price,
-            "tickets_sold": tickets_sold,
-            "total_revenue": total_revenue
-        }
+        if not events.exists():
+            return Response({
+                "organizer_id": organizer.id,
+                "total_revenue": 0.00,
+                "total_attendees": 0
+            }, status=status.HTTP_200_OK)
 
-        serializer = EventRevenueSerializer(data)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        # Aggregate total revenue and total attendees
+        total_data = events.aggregate(
+            total_attendees=Sum('ticketsSold'),
+            total_revenue=Sum(
+                ExpressionWrapper(F('ticketsSold') * F('ticketPrice'), output_field=DecimalField(max_digits=12, decimal_places=2))
+            )
+        )
+
+        serializer = OrganizerRevenueStatsSerializer({
+            "organizer_id": organizer.id,
+            "total_revenue": total_data['total_revenue'] or 0.00,
+            "total_attendees": total_data['total_attendees'] or 0
+        })
+        return Response(serializer.data)
 
 #32
 class UpdateUserView(APIView):
