@@ -780,13 +780,13 @@
 - Example: Visit `http://127.0.0.1:8000/api/organizer/1/low-performance-events/` to get low performance events for organizer 1
 
 
-### 43. Create Venue
+### 43. Create or Get Venue
 **Simplified View:**
-- URL: `http://127.0.0.1:8000/api/create-venue/`
-- Description: Creates a new venue with complete address and contact details
+- URL: `http://127.0.0.1:8000/api/create-or-get-venue/`
+- Description: Creates a new venue or returns an existing one if it matches the provided details
 
 **Detailed View:**
-- URL: `http://127.0.0.1:8000/api/create-venue/`
+- URL: `http://127.0.0.1:8000/api/create-or-get-venue/`
 - Method: POST
 - Input: Request body with venue details:
   - name (required)
@@ -795,9 +795,14 @@
   - state (required)
   - pincode (required, 5-10 digits)
   - contactNo (required)
-- Response: Returns created venue ID
-- Note: Validates pincode format and checks for duplicate venues
-- Example: Visit `http://127.0.0.1:8000/api/create-venue/` and send POST request with body:
+- Response: Returns venue ID
+  - If venue exists: Returns existing venue ID with status 200
+  - If new venue: Returns new venue ID with status 201
+- Note: 
+  - Checks for existing venues by comparing normalized (case-insensitive, space-removed) values
+  - Validates pincode format (5-10 digits)
+  - Returns existing venue if all details match exactly
+- Example: Visit `http://127.0.0.1:8000/api/create-or-get-venue/` and send POST request with body:
 ```json
 {
     "name": "Grand Ballroom",
@@ -807,6 +812,7 @@
     "pincode": "10001",
     "contactNo": "1234567890"
 }
+```
 
 ### 44. Event Detail
 **Simplified View:**
