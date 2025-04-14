@@ -462,12 +462,10 @@ class ComplaintSerializer(serializers.ModelSerializer):
 
 
 #31
-class EventRevenueSerializer(serializers.Serializer):
-    event_id = serializers.IntegerField()
-    event_name = serializers.CharField()
-    ticket_price = serializers.DecimalField(max_digits=10, decimal_places=2)
-    tickets_sold = serializers.IntegerField()
-    total_revenue = serializers.DecimalField(max_digits=15, decimal_places=2)
+class OrganizerRevenueStatsSerializer(serializers.Serializer):
+    organizer_id = serializers.IntegerField()
+    total_revenue = serializers.DecimalField(max_digits=12, decimal_places=2)
+    total_attendees = serializers.IntegerField()
 
 
 
