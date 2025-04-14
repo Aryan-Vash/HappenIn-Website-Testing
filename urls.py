@@ -77,9 +77,9 @@ urlpatterns = [
 
     #23
     path('create-event/<int:organizer_id>/', CreateEventView.as_view(), name='create-event'),
-     
+
     #24
-    path('verify-organizer/<int:staff_id>/<int:organizer_id>/<str:status>/',VerifyOrganizerView.as_view(),name='verify-organizer'), 
+    path('verify-organizer/<int:staff_id>/<int:organizer_id>/<str:verification_status>/',VerifyOrganizerView.as_view(),name='verify-organizer'),
 
     #25 
     path('feedback/<int:user_id>/<int:event_id>/', SubmitFeedbackView.as_view(), name='submit-feedback'), 
