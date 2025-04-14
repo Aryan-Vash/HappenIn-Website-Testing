@@ -508,22 +508,21 @@
   - Creation date
 - Example: Visit `http://127.0.0.1:8000/api/user/1/complaints/` to get complaint history for user 1
 
-### 31. Event Revenue (Duplicate)
+### 31. Organizer Revenue Stats
 **Simplified View:**
-- URL: `http://127.0.0.1:8000/api/event/<int:event_id>/revenue/`
-- Description: Retrieves revenue details for a specific event
+- URL: `http://127.0.0.1:8000/api/organizer/<int:organizer_id>/revenue-stats/`
+- Description: Retrieves revenue statistics for all events organized by a specific organizer
 
 **Detailed View:**
-- URL: `http://127.0.0.1:8000/api/event/1/revenue/` (example with event_id=1)
+- URL: `http://127.0.0.1:8000/api/organizer/1/revenue-stats/` (example with organizer_id=1)
 - Method: GET
-- Input: event_id in URL path
-- Response: Returns event revenue details including:
-  - event_name
-  - ticket_price
-  - tickets_sold
-  - total_revenue
-- Note: This endpoint is a duplicate of endpoint 28
-- Example: Visit `http://127.0.0.1:8000/api/event/1/revenue/` to get revenue details for event 1
+- Input: organizer_id in URL path
+- Response: Returns revenue statistics including:
+  - organizer_id
+  - total_revenue (sum of all event revenues)
+  - total_attendees (sum of all tickets sold)
+- Note: Returns zero values if organizer has no events
+- Example: Visit `http://127.0.0.1:8000/api/organizer/1/revenue-stats/` to get revenue statistics for organizer 1
 
 ### 32. Update User
 **Simplified View:**
