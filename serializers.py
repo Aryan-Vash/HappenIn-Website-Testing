@@ -649,7 +649,7 @@ class VenueSerializer(serializers.ModelSerializer):
         return value
 
 #44
-class EventDetailSerializer(serializers.ModelSerializer):
+class EventDetailCSerializer(serializers.ModelSerializer):
     venue_location = serializers.SerializerMethodField()
 
     class Meta:
