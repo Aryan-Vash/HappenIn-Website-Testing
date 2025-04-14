@@ -816,3 +816,27 @@ class EventRatingView(APIView):
             "event": event.eventName,
             "average_rating": avg_rating
         })
+
+
+#38
+class ComplaintsUnderAdminView(APIView):
+    def get(self, request, admin_id):
+        try:
+            admin = Admin.objects.get(id=admin_id)
+        except Admin.DoesNotExist:
+            return Response({"error": "Admin not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Get all organizers under this admin
+        organizers = Organizer.objects.filter(staff=admin)
+        if not organizers.exists():
+            return Response({"message": "No organizers under this admin"}, status=status.HTTP_200_OK)
+
+        # Get all complaints related to events managed by these organizers
+        complaints = Complaint.objects.filter(event__organizer__in=organizers)
+
+        serializer = ComplaintSerializer(complaints, many=True)
+        return Response({
+            "admin": admin.emailID,
+            "total_complaints": complaints.count(),
+            "complaints": serializer.data
+        })
