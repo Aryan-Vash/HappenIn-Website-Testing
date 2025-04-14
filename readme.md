@@ -807,3 +807,32 @@
     "pincode": "10001",
     "contactNo": "1234567890"
 }
+
+### 44. Event Detail
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/complaint_event-detail/<int:user_id>/<int:event_id>/`
+- Description: Retrieves detailed information about a specific event for a user
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/complaint_event-detail/1/2/` (example with user_id=1, event_id=2)
+- Method: GET
+- Input: 
+  - user_id (required): ID of the user in URL path
+  - event_id (required): ID of the event in URL path
+- Response: Returns complete event details including:
+  - eventName
+  - ticketPrice
+  - category
+  - maxAttendees
+  - created_at
+  - startDate
+  - startTime
+  - endDate
+  - endTime
+  - venue details
+  - organizer details
+  - ticketsSold
+  - status
+- Error Response: Returns 404 if event not found
+- Example: Visit `http://127.0.0.1:8000/api/complaint_event-detail/1/2/` to get details of event with ID 2 for user with ID 1
+
