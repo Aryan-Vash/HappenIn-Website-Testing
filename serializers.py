@@ -332,14 +332,14 @@ class EventSerializer(serializers.ModelSerializer):
         validated_data['status'] = 'Upcoming'
         return super().create(validated_data)
 
-
-
 #23
 class OrganizerVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organizer
         fields = ['id', 'username', 'emailID', 'verificationStatus', 'dateOfVerification', 'staff']
         read_only_fields = ['id', 'username', 'emailID', 'dateOfVerification', 'staff']
+
+
         
 
 #24
