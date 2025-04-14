@@ -629,3 +629,9 @@ class EventListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
+
+#42
+class EventPerformanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = '__all__'
