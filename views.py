@@ -954,3 +954,13 @@ class CreateVenueView(APIView):
             venue = serializer.save()
             return Response({"venue_id": venue.id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#44
+class EventDetailView(APIView):
+    def get(self, request, user_id, event_id):
+        try:
+            event = Event.objects.get(id=event_id)
+            serializer = EventDetailSerializer(event)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Event.DoesNotExist:
+            return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
