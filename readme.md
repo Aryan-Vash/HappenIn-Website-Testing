@@ -760,3 +760,21 @@
 - Response: Returns list of events matching the filter criteria
 - Note: Returns error for invalid filter types
 - Example: Visit `http://127.0.0.1:8000/api/events/filter/2/` to get events happening in the next 7 days
+
+
+### 42. Low Performance Events
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/organizer/<int:organizer_id>/low-performance-events/`
+- Description: Retrieves past events that had low attendance (less than 33% of capacity)
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/organizer/1/low-performance-events/` (example with organizer_id=1)
+- Method: GET
+- Input: organizer_id in URL path
+- Response: Returns list of low performance events with:
+  - event details
+  - tickets sold
+  - maximum capacity
+  - attendance ratio
+- Note: Only returns past events with attendance ratio less than 33%
+- Example: Visit `http://127.0.0.1:8000/api/organizer/1/low-performance-events/` to get low performance events for organizer 1
