@@ -985,3 +985,42 @@ class EventDetailComplaintView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Event.DoesNotExist:
             return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+#44
+CATEGORY_GROUPS = {
+    'Entertainment/Art': ['Concert', 'Dance', 'Art'],
+    'Business/Tech': ['Business', 'Tech'],
+    'Food/Lifestyle': ['Food', 'Expo'],
+    'Social Impact': ['Charity'],
+    'Sports/Fitness': ['Sports', 'Gaming']
+}
+
+def get_grouped_category(category_name):
+    for group, subcategories in CATEGORY_GROUPS.items():
+        if category_name.strip().lower() in map(str.lower, subcategories):
+            return group
+    return None  # Ignore categories that don't match any group
+
+class MultiCategoryAttendeesView(APIView):
+    def get(self, request):
+        user_category_groups = defaultdict(set)
+
+        transactions = Transaction.objects.select_related('user', 'event')
+
+        for txn in transactions:
+            user = txn.user
+            event = txn.event
+            if user and event and event.category:
+                group = get_grouped_category(event.category)
+                if group:
+                    user_category_groups[user.id].add(group)
+
+        qualified_users = [
+            User.objects.get(id=user_id)
+            for user_id, groups in user_category_groups.items()
+            if len(groups) > 2
+        ]
+
+        serializer = UserNameSerializer(qualified_users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
