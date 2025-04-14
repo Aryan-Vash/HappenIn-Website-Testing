@@ -947,9 +947,30 @@ class LowPerformanceEventsView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 #43
-class CreateVenueView(APIView):
+class CreateOrGetVenueView(APIView):
+    def normalize(self, s):
+        return ''.join(s.lower().split()) if s else ''
+
     def post(self, request):
-        serializer = VenueSerializer(data=request.data)
+        data = request.data
+        # Normalize all string fields to compare case-insensitively and without spaces
+        name = self.normalize(data.get('name', ''))
+        street = self.normalize(data.get('street', ''))
+        city = self.normalize(data.get('city', ''))
+        state = self.normalize(data.get('state', ''))
+        pincode = data.get('pincode', '')
+
+        # Search for an existing venue
+        for venue in Venue.objects.all():
+            if (self.normalize(venue.name) == name and
+                self.normalize(venue.street) == street and
+                self.normalize(venue.city) == city and
+                self.normalize(venue.state) == state and
+                venue.pincode == pincode):
+                return Response({"venue_id": venue.id}, status=status.HTTP_200_OK)
+
+        # Create a new venue if not found
+        serializer = VenueSerializer(data=data)
         if serializer.is_valid():
             venue = serializer.save()
             return Response({"venue_id": venue.id}, status=status.HTTP_201_CREATED)
