@@ -114,6 +114,10 @@ urlpatterns = [
      #35
     path('event/<int:event_id>/registrations/', EventRegistrationView.as_view(), name='event-registrations'), 
 
+    #36
+    path('organizer/<int:organiser_id>/event-stats/', OrganizerEventStatsView.as_view(), name='organizer-event-stats'),
+
+
 
 
 
