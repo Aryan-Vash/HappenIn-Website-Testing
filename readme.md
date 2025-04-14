@@ -366,17 +366,22 @@
 
 ### 24. Verify Organizer
 **Simplified View:**
-- URL: `http://127.0.0.1:8000/api/verify-organizer/<int:staff_id>/<int:organizer_id>/`
-- Description: Verifies an organizer's account by an admin staff member
+- URL: `http://127.0.0.1:8000/api/verify-organizer/<int:staff_id>/<int:organizer_id>/<str:status>/`
+- Description: Verifies or unverifies an organizer's account by an admin staff member
 
 **Detailed View:**
-- URL: `http://127.0.0.1:8000/api/verify-organizer/1/2/` (example with staff_id=1, organizer_id=2)
+- URL: `http://127.0.0.1:8000/api/verify-organizer/1/2/true/` (example with staff_id=1, organizer_id=2, status=true)
 - Method: POST
 - Input: 
   - staff_id (required): ID of the admin staff in URL path
   - organizer_id (required): ID of the organizer to verify in URL path
+  - status (required): Verification status ('true' or 'false') in URL path
 - Response: Returns updated organizer details with verification status
-- Example: Visit `http://127.0.0.1:8000/api/verify-organizer/1/2/` to verify organizer 2 by staff 1
+- Note: 
+  - Sets the verification date to today's date if status is 'true'
+  - Removes verification date if status is 'false'
+  - Updates the staff member who performed the verification
+- Example: Visit `http://127.0.0.1:8000/api/verify-organizer/1/2/true/` to verify organizer 2 by staff 1
 
 ### 25. Submit Feedback
 **Simplified View:**
