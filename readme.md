@@ -666,3 +666,27 @@
   - average rating (rounded to 2 decimal places)
 - Note: Returns "No ratings yet" if no ratings are available
 - Example: Visit `http://127.0.0.1:8000/api/event/1/rating/` to get average rating for event 1
+
+
+### 38. Complaints Under Admin
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/admin/<int:admin_id>/organizer-complaints/`
+- Description: Retrieves all complaints related to events managed by organizers under a specific admin
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/admin/1/organizer-complaints/` (example with admin_id=1)
+- Method: GET
+- Input: admin_id in URL path
+- Response: Returns complaint details including:
+  - admin email
+  - total number of complaints
+  - list of complaints with:
+    - event name
+    - user name
+    - organizer name
+    - complaint category
+    - status
+    - description
+    - creation date
+- Note: Returns empty list if no organizers or complaints are found under the admin
+- Example: Visit `http://127.0.0.1:8000/api/admin/1/organizer-complaints/` to get all complaints under admin with ID 1
