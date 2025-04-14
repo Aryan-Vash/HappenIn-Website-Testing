@@ -129,6 +129,8 @@ urlpatterns = [
     #40
     path('event/<int:event_id>/attendees/', EventAttendeesView.as_view(), name='event-attendees'),
 
+    #41
+    path('events/filter/<int:filter_type>/', FilteredEventListView.as_view(), name='filtered-events'),
 
 
 
