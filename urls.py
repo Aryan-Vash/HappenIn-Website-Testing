@@ -111,8 +111,8 @@ urlpatterns = [
     #34
     path('events/<int:event_id>/update/', UpdateEventView.as_view(), name='update-event'), 
 
-
-
+     #35
+    path('event/<int:event_id>/registrations/', EventRegistrationView.as_view(), name='event-registrations'), 
 
 
 
