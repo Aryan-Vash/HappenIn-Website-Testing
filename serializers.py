@@ -604,3 +604,13 @@ class ComplaintSerializer(serializers.ModelSerializer):
         model = Complaint
         fields = ['id', 'event_name', 'user_name', 'organizer_name', 'Category', 'Status', 'Description', 'Created_At']
 
+
+
+#39
+class TopUserSerializer(serializers.ModelSerializer):
+    events_registered = serializers.IntegerField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'emailID', 'contactNo', 'events_registered']
+
