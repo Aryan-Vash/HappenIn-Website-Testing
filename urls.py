@@ -141,6 +141,9 @@ urlpatterns = [
     #44
     path('complaint_event-detail/<int:user_id>/<int:event_id>/', EventDetailComplaintView.as_view(), name='event-detail'),
 
+    #45
+    path('multi-category-users/', MultiCategoryAttendeesView.as_view(), name='multi-category-users'),
+
 
     
 ]
