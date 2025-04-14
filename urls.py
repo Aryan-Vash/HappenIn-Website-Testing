@@ -100,7 +100,7 @@ urlpatterns = [
     path('user/<int:user_id>/complaints/', UserComplaintHistoryView.as_view(), name='user-complaints'),
 
     #31
-    path('event/<int:event_id>/revenue/', EventRevenueAPIView.as_view(), name='event-revenue'), 
+    path('organizer/<int:organizer_id>/revenue-stats/', OrganizerRevenueStatsView.as_view(), name='organizer-revenue-stats'),
 
     #32
     path('users/<int:user_id>/update/', UpdateUserView.as_view(), name='update-user'), 
