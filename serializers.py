@@ -596,3 +596,13 @@ class AverageTicketsSoldSerializer(serializers.Serializer):
     average_percentage_sold = serializers.FloatField()
 
 
+#38
+class ComplaintSerializer(serializers.ModelSerializer):
+    event_name = serializers.CharField(source='event.eventName', read_only=True)
+    user_name = serializers.CharField(source='user.username', read_only=True)
+    organizer_name = serializers.CharField(source='event.organizer.username', read_only=True)
+
+    class Meta:
+        model = Complaint
+        fields = ['id', 'event_name', 'user_name', 'organizer_name', 'Category', 'Status', 'Description', 'Created_At']
+
