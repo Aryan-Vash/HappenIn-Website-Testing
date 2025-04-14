@@ -605,5 +605,23 @@
 }
 ```
 
+### 35. Event Registrations
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/event/<int:event_id>/registrations/`
+- Description: Retrieves all registrations for a specific event
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/event/1/registrations/` (example with event_id=1)
+- Method: GET
+- Input: event_id in URL path
+- Response: Returns event registration details including:
+  - event_name
+  - total_registrations (count)
+  - registrations list with:
+    - registration_id
+    - username
+    - email
+    - contact
+- Example: Visit `http://127.0.0.1:8000/api/event/1/registrations/` to get all registrations for event 1
 
 
