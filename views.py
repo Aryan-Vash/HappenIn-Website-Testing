@@ -10,7 +10,7 @@ from rest_framework import *
 
 from .serializers import *
 
-from django.db.models import Avg, F, Q
+from django.db.models import *
 
 from django.utils import timezone 
 
@@ -848,3 +848,23 @@ class ComplaintsUnderAdminView(APIView):
             "total_complaints": complaints.count(),
             "complaints": serializer.data
         })
+
+
+#39
+class TopAttendeesView(APIView):
+    def get(self, request, staff_id):
+        # Validate staff
+        try:
+            Admin.objects.get(pk=staff_id)
+        except Admin.DoesNotExist:
+            return Response({"error": "Invalid staff ID."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Get users with more than 2 registrations, ordered by count desc
+        top_users = (
+            User.objects.annotate(events_registered=Count('registration'))
+            .filter(events_registered__gt=2)
+            .order_by('-events_registered')[:5]
+        )
+
+        serializer = TopUserSerializer(top_users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
