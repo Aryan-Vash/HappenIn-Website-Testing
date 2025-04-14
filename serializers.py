@@ -648,19 +648,6 @@ class VenueSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Pincode must be 5 to 10 digits.")
         return value
 
-    def validate(self, data):
-        if Venue.objects.filter(
-            name=data['name'],
-            street=data['street'],
-            city=data['city'],
-            state=data['state'],
-            pincode=data['pincode']
-        ).exists():
-
-
-            raise serializers.ValidationError("Venue with these details already exists.")
-        return data
-
 #44
 class EventDetailSerializer(serializers.ModelSerializer):
     venue_location = serializers.SerializerMethodField()
