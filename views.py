@@ -977,7 +977,7 @@ class CreateOrGetVenueView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #44
-class EventDetailView(APIView):
+class EventDetailComplaintView(APIView):
     def get(self, request, user_id, event_id):
         try:
             event = Event.objects.get(id=event_id)
