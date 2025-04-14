@@ -126,6 +126,8 @@ urlpatterns = [
     #39
     path('top-attendees/<int:staff_id>/', TopAttendeesView.as_view(), name='top-attendees'),
 
+    #40
+    path('event/<int:event_id>/attendees/', EventAttendeesView.as_view(), name='event-attendees'),
 
 
 
