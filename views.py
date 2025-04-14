@@ -919,3 +919,29 @@ class FilteredEventListView(APIView):
 
         serializer = EventListSerializer(events, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+#42
+class LowPerformanceEventsView(APIView):
+    def get(self, request, organizer_id):
+        try:
+            organizer = Organizer.objects.get(pk=organizer_id)
+        except Organizer.DoesNotExist:
+            return Response({"error": "Organizer not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        current_datetime = now()
+
+        events = Event.objects.filter(
+            organizer=organizer,
+            endDate__lt=current_datetime.date()
+        )
+
+        low_perf_events = []
+
+        for event in events:
+            if event.maxAttendees and event.maxAttendees > 0:
+                ratio = event.ticketsSold / event.maxAttendees
+                if ratio < 0.33:
+                    low_perf_events.append(event)
+
+        serializer = EventPerformanceSerializer(low_perf_events, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
