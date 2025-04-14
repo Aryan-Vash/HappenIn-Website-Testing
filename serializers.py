@@ -635,3 +635,26 @@ class EventPerformanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
+
+
+#43
+class VenueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Venue
+        fields = '__all__'
+
+    def validate_pincode(self, value):
+        if not value.isdigit() or not (5 <= len(value) <= 10):
+            raise serializers.ValidationError("Pincode must be 5 to 10 digits.")
+        return value
+
+    def validate(self, data):
+        if Venue.objects.filter(
+            name=data['name'],
+            street=data['street'],
+            city=data['city'],
+            state=data['state'],
+            pincode=data['pincode']
+        ).exists():
+            raise serializers.ValidationError("Venue with these details already exists.")
+        return data
