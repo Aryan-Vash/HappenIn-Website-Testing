@@ -800,3 +800,19 @@ class OrganizerEventStatsView(APIView):
             "organizer_id": organiser_id,
             "average_percentage_sold": avg_percentage
         }, status=status.HTTP_200_OK)
+
+#37
+class EventRatingView(APIView):
+    def get(self, request, event_id):
+        try:
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        avg_rating = Feedback.objects.filter(event=event, Rating__isnull=False).aggregate(average=Avg('Rating'))['average']
+        avg_rating = round(avg_rating, 2) if avg_rating is not None else "No ratings yet"
+
+        return Response({
+            "event": event.eventName,
+            "average_rating": avg_rating
+        })
