@@ -769,3 +769,34 @@ class EventRegistrationView(APIView):
             "total_registrations": total_registrations,
             "registrations": serializer.data
         })
+
+
+#36
+class OrganizerEventStatsView(APIView):
+    def get(self, request, organiser_id):
+        now = datetime.now()
+        today = now.date()
+        current_time = now.time()
+
+       # Get past events (completed)
+        past_events = Event.objects.filter(
+            Q(endDate__lt=today) |
+            Q(endDate=today, endTime__lt=current_time),
+            organizer__id=organiser_id
+        )
+
+        total_percentage = 0
+        counted_events = 0
+
+        for event in past_events:
+            if event.maxAttendees:  # Avoid division by zero
+                percentage = (event.ticketsSold / event.maxAttendees) * 100
+                total_percentage += percentage
+                counted_events += 1
+
+        avg_percentage = round(total_percentage / counted_events, 2) if counted_events > 0 else 0.0
+
+        return Response({
+            "organizer_id": organiser_id,
+            "average_percentage_sold": avg_percentage
+        }, status=status.HTTP_200_OK)
