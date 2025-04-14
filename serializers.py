@@ -616,3 +616,10 @@ class TopUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'emailID', 'contactNo', 'events_registered']
 
+#40
+class EventAttendeeWithTicketsSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    username = serializers.CharField()
+    firstName = serializers.CharField()
+    lastName = serializers.CharField()
+    num_tickets = serializers.IntegerField()
