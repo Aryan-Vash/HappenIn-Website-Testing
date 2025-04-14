@@ -647,3 +647,17 @@
   - Response will show the average percentage of tickets sold for all past events organized by the specified organizer
 
 
+### 37. Event Rating
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/event/<int:event_id>/rating/`
+- Description: Retrieves the average rating for a specific event
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/event/1/rating/` (example with event_id=1)
+- Method: GET
+- Input: event_id in URL path
+- Response: Returns event rating details including:
+  - event name
+  - average rating (rounded to 2 decimal places)
+- Note: Returns "No ratings yet" if no ratings are available
+- Example: Visit `http://127.0.0.1:8000/api/event/1/rating/` to get average rating for event 1
