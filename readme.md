@@ -743,3 +743,20 @@
     - number of tickets purchased
 - Note: For free events (ticket price = 0), number of tickets defaults to 1
 - Example: Visit `http://127.0.0.1:8000/api/event/1/attendees/` to get attendee list for event 1
+
+
+### 41. Filtered Event List
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/events/filter/<int:filter_type>/`
+- Description: Retrieves events filtered by different time periods
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/events/filter/1/` (example with filter_type=1)
+- Method: GET
+- Input: filter_type in URL path
+  - 1 = Today's events
+  - 2 = Events in next 7 days
+  - 3 = Events in next 30 days
+- Response: Returns list of events matching the filter criteria
+- Note: Returns error for invalid filter types
+- Example: Visit `http://127.0.0.1:8000/api/events/filter/2/` to get events happening in the next 7 days
