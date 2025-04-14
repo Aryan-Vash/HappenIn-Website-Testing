@@ -987,7 +987,7 @@ class EventDetailComplaintView(APIView):
             return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
-#44
+#45
 CATEGORY_GROUPS = {
     'Entertainment/Art': ['Concert', 'Dance', 'Art'],
     'Business/Tech': ['Business', 'Tech'],
