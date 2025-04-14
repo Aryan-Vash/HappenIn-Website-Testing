@@ -120,6 +120,8 @@ urlpatterns = [
     #37
     path('event/<int:event_id>/rating/', EventRatingView.as_view(), name='event-average-rating'),
 
+    #38
+    path('admin/<int:admin_id>/organizer-complaints/', ComplaintsUnderAdminView.as_view(), name='admin-organizer-complaints'),
 
 
 
