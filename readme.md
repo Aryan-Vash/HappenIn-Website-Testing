@@ -842,3 +842,25 @@
 - Error Response: Returns 404 if event not found
 - Example: Visit `http://127.0.0.1:8000/api/complaint_event-detail/1/2/` to get details of event with ID 2 for user with ID 1
 
+### 45. Multi-Category Attendees
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/multi-category-users/`
+- Description: Retrieves users who have attended events across multiple categories
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/multi-category-users/`
+- Method: GET
+- Input: None
+- Response: Returns list of users who have attended events in more than 2 different categories, including:
+  - username
+  - firstName
+  - lastName
+- Note: 
+  - Categories are grouped as follows:
+    - Entertainment/Art: Concert, Dance, Art
+    - Business/Tech: Business, Tech
+    - Food/Lifestyle: Food, Expo
+    - Social Impact: Charity
+    - Sports/Fitness: Sports, Gaming
+  - Only includes users who have attended events in at least 3 different category groups
+- Example: Visit `http://127.0.0.1:8000/api/multi-category-users/` to get list of multi-category attendees
