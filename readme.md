@@ -723,3 +723,23 @@
   - Results are ordered by number of registrations (descending)
   - Limited to top 5 users
 - Example: Visit `http://127.0.0.1:8000/api/top-attendees/1/` to get top attendees list
+
+
+### 40. Event Attendees
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/event/<int:event_id>/attendees/`
+- Description: Retrieves detailed information about all attendees for a specific event
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/event/1/attendees/` (example with event_id=1)
+- Method: GET
+- Input: event_id in URL path
+- Response: Returns event attendees information including:
+  - event_id
+  - list of attendees with:
+    - user_id
+    - username
+    - full_name (first name + last name)
+    - number of tickets purchased
+- Note: For free events (ticket price = 0), number of tickets defaults to 1
+- Example: Visit `http://127.0.0.1:8000/api/event/1/attendees/` to get attendee list for event 1
