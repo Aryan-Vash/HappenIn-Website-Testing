@@ -778,3 +778,32 @@
   - attendance ratio
 - Note: Only returns past events with attendance ratio less than 33%
 - Example: Visit `http://127.0.0.1:8000/api/organizer/1/low-performance-events/` to get low performance events for organizer 1
+
+
+### 43. Create Venue
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/create-venue/`
+- Description: Creates a new venue with complete address and contact details
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/create-venue/`
+- Method: POST
+- Input: Request body with venue details:
+  - name (required)
+  - street (required)
+  - city (required)
+  - state (required)
+  - pincode (required, 5-10 digits)
+  - contactNo (required)
+- Response: Returns created venue ID
+- Note: Validates pincode format and checks for duplicate venues
+- Example: Visit `http://127.0.0.1:8000/api/create-venue/` and send POST request with body:
+```json
+{
+    "name": "Grand Ballroom",
+    "street": "123 Main Street",
+    "city": "New York",
+    "state": "NY",
+    "pincode": "10001",
+    "contactNo": "1234567890"
+}
