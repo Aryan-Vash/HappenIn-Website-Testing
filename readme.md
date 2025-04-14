@@ -689,3 +689,37 @@
     - creation date
 - Note: Returns empty list if no organizers or complaints are found under the admin
 - Example: Visit `http://127.0.0.1:8000/api/admin/1/organizer-complaints/` to get all complaints under admin with ID 1
+
+### 39. Top Attendees
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/top-attendees/<int:staff_id>/`
+- Description: Retrieves a list of top attendees who have registered for more than 2 events
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/top-attendees/1/` (example with staff_id=1)
+- Method: GET
+- Input: 
+  - staff_id (required): ID of the admin staff in URL path
+- Response: Returns list of top 5 users with their registration counts
+  ```json
+  {
+    "users": [
+      {
+        "user_id": 1,
+        "username": "user1",
+        "events_registered": 5
+      },
+      {
+        "user_id": 2,
+        "username": "user2",
+        "events_registered": 4
+      }
+      // ... up to 5 users
+    ]
+  }
+  ```
+- Note: 
+  - Only returns users who have registered for more than 2 events
+  - Results are ordered by number of registrations (descending)
+  - Limited to top 5 users
+- Example: Visit `http://127.0.0.1:8000/api/top-attendees/1/` to get top attendees list
