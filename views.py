@@ -443,7 +443,7 @@ class CreateEventView(APIView):
 
 #23
 class VerifyOrganizerView(APIView):
-    def post(self, request, staff_id, organizer_id, status):
+    def get(self, request, staff_id, organizer_id, verification_status):
         try:
             staff = Admin.objects.get(pk=staff_id)
         except Admin.DoesNotExist:
@@ -454,11 +454,11 @@ class VerifyOrganizerView(APIView):
         except Organizer.DoesNotExist:
             return Response({"error": "Invalid organizer ID."}, status=status.HTTP_404_NOT_FOUND)
 
-        if status.lower() not in ['true', 'false']:
+        if verification_status.lower() not in ['true', 'false']:
             return Response({"error": "Invalid verification status. Use 'true' or 'false'."},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        verification_bool = status.lower() == 'true'
+        verification_bool = verification_status.lower() == 'true'
         organizer.verificationStatus = verification_bool
         organizer.staff = staff
         organizer.dateOfVerification = date.today() if verification_bool else None
@@ -466,7 +466,6 @@ class VerifyOrganizerView(APIView):
 
         serializer = OrganizerVerificationSerializer(organizer)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
 
 
