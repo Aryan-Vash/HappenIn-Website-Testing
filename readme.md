@@ -584,7 +584,7 @@
 - Description: Updates event information
 
 **Detailed View:**
-- URL: `http://127.0.0.1:8000/api/events/1/update/` (example with event_id=1)
+- URL: `http://127.0.0.1:8000/api/events/13/update/` (example with event_id=13)
 - Method: PUT
 - Input: 
   - event_id (required): ID of the event in URL path
