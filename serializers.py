@@ -671,3 +671,23 @@ class UserNameSerializer(serializers.Serializer):
 #46
 class ComplaintStatusUpdateSerializer(serializers.Serializer):
     status_id = serializers.IntegerField(min_value=1, max_value=4)
+
+
+#47
+class AdminOrganizerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organizer
+        fields = ['id', 'name']  # adjust fields as per Organizer model
+
+class AdminVenueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Venue
+        fields = ['id', 'name']  # adjust fields as needed
+
+class AllEventsForAdminSerializer(serializers.ModelSerializer):
+    organizer = AdminOrganizerSerializer()
+    venue = AdminVenueSerializer()
+
+    class Meta:
+        model = Event
+        fields = '__all__'
