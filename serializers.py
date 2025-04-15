@@ -691,3 +691,10 @@ class AllEventsForAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
+
+
+#48
+class AllTheOrganisersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organizer
+        fields = '__all__'
