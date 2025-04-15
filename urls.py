@@ -150,6 +150,9 @@ urlpatterns = [
     #47
     path('admin/all-events/', AllEventsForAdmin.as_view(), name='all-events'),
 
+    #48
+    path('admin/all-organisers/', AllTheOrganisers.as_view(), name='all-organisers'),
+
 
     
 ]
