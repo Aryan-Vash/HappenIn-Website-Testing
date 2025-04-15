@@ -124,7 +124,7 @@ urlpatterns = [
     path('admin/<int:admin_id>/organizer-complaints/', ComplaintsUnderAdminView.as_view(), name='admin-organizer-complaints'),
 
     #39
-    path('top-attendees/<int:staff_id>/', TopAttendeesView.as_view(), name='top-attendees'),
+    path('top-attendees/', TopAttendeesView.as_view(), name='top-attendees'),
 
     #40
     path('event/<int:event_id>/attendees/', EventAttendeesView.as_view(), name='event-attendees'),
