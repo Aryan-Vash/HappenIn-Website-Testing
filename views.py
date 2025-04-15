@@ -711,17 +711,17 @@ class UpdateEventView(APIView):
 
         data = request.data.copy()
 
-        # Prevent changes to immutable fields
-        immutable_fields = ['created_at']
-        for field in immutable_fields:
-            if field in data:
-                data.pop(field)
+        # Remove immutable fields
+        data.pop('created_at', None)
 
-        # Validate startDate and startTime are in the future
+        # Extract start date and time (if provided)
         start_date = data.get('startDate')
         start_time = data.get('startTime')
 
-        if start_date and start_time:
+        if start_date or start_time:
+            # Ensure both are provided together
+            if not (start_date and start_time):
+                return Response({"error": "Both startDate and startTime must be provided together."}, status=status.HTTP_400_BAD_REQUEST)
             try:
                 combined_datetime = datetime.combine(
                     datetime.strptime(start_date, "%Y-%m-%d").date(),
@@ -730,10 +730,9 @@ class UpdateEventView(APIView):
                 combined_datetime = timezone.make_aware(combined_datetime)
                 if combined_datetime < timezone.now():
                     return Response({"error": "Event cannot start in the past."}, status=status.HTTP_400_BAD_REQUEST)
-            except Exception as e:
+            except Exception:
                 return Response({"error": "Invalid date/time format."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Validate fields like maxAttendees, ticketsSold, category, etc.
         if 'maxAttendees' in data:
             try:
                 if int(data['maxAttendees']) <= 0:
@@ -752,13 +751,15 @@ class UpdateEventView(APIView):
             if not isinstance(data['category'], str) or not data['category'].strip():
                 return Response({"error": "Invalid category."}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Organizer check
         if 'organizer' in data and int(data['organizer']) != event.organizer_id:
             return Response({"error": "Organizer ID cannot be changed."}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = EventSerializer(event, data=data, partial=True)
+        serializer = EventUpdateSerializer(event, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
