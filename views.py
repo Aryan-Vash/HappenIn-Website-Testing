@@ -856,7 +856,7 @@ class ComplaintsUnderAdminView(APIView):
 #39
 class TopAttendeesView(APIView):
     def get(self, request):
-        # Fetch users with more than 2 registrations
+        # Get users with more than 2 registrations, ordered by count desc
         top_users = (
             User.objects.annotate(events_registered=Count('registration'))
             .filter(events_registered__gt=2)
