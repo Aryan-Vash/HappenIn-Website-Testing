@@ -698,3 +698,13 @@ class AllTheOrganisersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organizer
         fields = '__all__'
+
+
+#49
+class WalletTopUpSerializer(serializers.Serializer):
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+
+    def validate_amount(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Amount must be greater than 0.")
+        return value
