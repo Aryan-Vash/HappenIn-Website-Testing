@@ -147,5 +147,9 @@ urlpatterns = [
     #46
     path('complaints/<int:staff_id>/<int:complaint_id>/update-status/', UpdateComplaintStatusView.as_view(), name='update-complaint-status'),
 
+    #47
+    path('admin/all-events/', AllEventsForAdmin.as_view(), name='all-events'),
+
+
     
 ]
