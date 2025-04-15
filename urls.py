@@ -153,6 +153,8 @@ urlpatterns = [
     #48
     path('admin/all-organisers/', AllTheOrganisers.as_view(), name='all-organisers'),
 
+    #49
+    path('user/<int:user_id>/wallet-topup/', WalletTopUpView.as_view(), name='wallet-topup'),
 
     
 ]
