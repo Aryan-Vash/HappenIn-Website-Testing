@@ -666,3 +666,8 @@ class UserNameSerializer(serializers.Serializer):
     username = serializers.CharField()
     firstName = serializers.CharField()
     lastName = serializers.CharField(allow_null=True, allow_blank=True)
+
+
+#46
+class ComplaintStatusUpdateSerializer(serializers.Serializer):
+    status_id = serializers.IntegerField(min_value=1, max_value=4)
