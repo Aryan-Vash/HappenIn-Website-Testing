@@ -946,3 +946,31 @@
   - dateOfVerification
   - staff details
 - Example: Visit `http://127.0.0.1:8000/api/admin/all-organizers/` to get list of all organizers
+
+
+### 49. Wallet Top-Up
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/user/<int:user_id>/wallet-topup/`
+- Description: Adds funds to a user's wallet balance
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/user/1/wallet-topup/` (example with user_id=1)
+- Method: POST
+- Input: 
+  - user_id (required): ID of the user in URL path
+  - Request Body:
+    - amount (required): Decimal value greater than 0
+- Response: Returns updated wallet details including:
+  - message
+  - user_id
+  - final_wallet_cash
+- Note: 
+  - Validates that the user exists
+  - Validates that the amount is greater than 0
+  - Updates the user's wallet balance by adding the specified amount
+- Example: Visit `http://127.0.0.1:8000/api/user/1/wallet-topup/` and send POST request with body:
+```json
+{
+    "amount": 1000.00
+}
+```
