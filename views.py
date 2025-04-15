@@ -855,14 +855,8 @@ class ComplaintsUnderAdminView(APIView):
 
 #39
 class TopAttendeesView(APIView):
-    def get(self, request, staff_id):
-        # Validate staff
-        try:
-            Admin.objects.get(pk=staff_id)
-        except Admin.DoesNotExist:
-            return Response({"error": "Invalid staff ID."}, status=status.HTTP_404_NOT_FOUND)
-
-        # Get users with more than 2 registrations, ordered by count desc
+    def get(self, request):
+        # Fetch users with more than 2 registrations
         top_users = (
             User.objects.annotate(events_registered=Count('registration'))
             .filter(events_registered__gt=2)
