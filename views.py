@@ -1063,3 +1063,9 @@ class UpdateComplaintStatusView(APIView):
             'new_status': complaint.Status,
             'staff_id': admin.id
         }, status=status.HTTP_200_OK)
+
+
+#47
+class AllEventsForAdmin(generics.ListAPIView):
+    queryset = Event.objects.all()
+    serializer_class = AllEventsForAdminSerializer
