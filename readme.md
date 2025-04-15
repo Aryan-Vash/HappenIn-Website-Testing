@@ -924,3 +924,25 @@
   - ticketsSold
   - status
 - Example: Visit `http://127.0.0.1:8000/api/admin/all-events/` to get list of all events
+
+
+### 48. All Organizers
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/admin/all-organizers/`
+- Description: Retrieves a list of all organizers in the system for admin viewing
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/admin/all-organizers/`
+- Method: GET
+- Input: None
+- Response: Returns list of all organizers with their details including:
+  - username
+  - firstName
+  - lastName
+  - emailID
+  - contactNo
+  - organization
+  - verificationStatus
+  - dateOfVerification
+  - staff details
+- Example: Visit `http://127.0.0.1:8000/api/admin/all-organizers/` to get list of all organizers
