@@ -1024,3 +1024,42 @@ class MultiCategoryAttendeesView(APIView):
 
         serializer = UserNameSerializer(qualified_users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+#46
+STATUS_CHOICES = ['Pending', 'In Progress', 'Resolved', 'Dismissed']
+
+class UpdateComplaintStatusView(APIView):
+    def put(self, request, staff_id, complaint_id):
+        serializer = ComplaintStatusUpdateSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        status_id = serializer.validated_data['status_id']
+
+        # Validate admin
+        try:
+            admin = Admin.objects.get(id=staff_id)
+        except Admin.DoesNotExist:
+            return Response({'error': 'Invalid staff ID'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Validate complaint
+        try:
+            complaint = Complaint.objects.get(id=complaint_id)
+        except Complaint.DoesNotExist:
+            return Response({'error': 'Invalid complaint ID'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Validate status_id
+        if status_id < 1 or status_id > 4:
+            return Response({'error': 'Invalid status ID'}, status=status.HTTP_400_BAD_REQUEST)
+
+        complaint.Status = STATUS_CHOICES[status_id - 1]
+        complaint.staff = admin
+        complaint.save()
+
+        return Response({
+            'message': 'Complaint status updated successfully.',
+            'complaint_id': complaint.id,
+            'new_status': complaint.Status,
+            'staff_id': admin.id
+        }, status=status.HTTP_200_OK)
