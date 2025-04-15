@@ -553,12 +553,12 @@ class EventUpdateSerializer(serializers.ModelSerializer):
         exclude = ['created_at']  # Prevent updates to this field
 
     def validate(self, data):
-        # Validate that the organizer exists if being updated
+        # Validate organizer existence
         if 'organizer' in data and data['organizer'] is not None:
             if not Organizer.objects.filter(id=data['organizer'].id).exists():
                 raise serializers.ValidationError({'organizer': 'Invalid organizer ID.'})
 
-        # Validate start/end date-time logic
+        # Use fallback to instance values if not present in partial update
         start_date = data.get('startDate', getattr(self.instance, 'startDate', None))
         end_date = data.get('endDate', getattr(self.instance, 'endDate', None))
         start_time = data.get('startTime', getattr(self.instance, 'startTime', None))
@@ -570,7 +570,7 @@ class EventUpdateSerializer(serializers.ModelSerializer):
             elif end_date == start_date and end_time and start_time and end_time <= start_time:
                 raise serializers.ValidationError("End time must be after start time when dates are the same.")
 
-        # Validate ticketsSold doesn't exceed maxAttendees
+        # Validate ticketsSold <= maxAttendees
         max_attendees = data.get('maxAttendees', getattr(self.instance, 'maxAttendees', None))
         tickets_sold = data.get('ticketsSold', getattr(self.instance, 'ticketsSold', None))
         if max_attendees is not None and tickets_sold is not None:
