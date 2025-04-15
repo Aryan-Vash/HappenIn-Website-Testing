@@ -1077,3 +1077,25 @@ class AllEventsForAdmin(generics.ListAPIView):
 class AllTheOrganisers(generics.ListAPIView):
     queryset = Organizer.objects.all()
     serializer_class = AllTheOrganisersSerializer
+
+
+#49
+class WalletTopUpView(APIView):
+    def post(self, request, user_id):
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = WalletTopUpSerializer(data=request.data)
+        if serializer.is_valid():
+            amount = serializer.validated_data['amount']
+            user.walletCash += amount
+            user.save()
+            return Response({
+                "message": "Wallet updated successfully.",
+                "user_id": user.id,
+                "final_wallet_cash": user.walletCash
+            }, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
