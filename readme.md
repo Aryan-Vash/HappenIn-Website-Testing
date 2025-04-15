@@ -915,7 +915,7 @@
 
 ### 48. All Organizers
 **Simplified View:**
-- URL: `http://127.0.0.1:8000/api/admin/all-organizers/`
+- URL: `http://127.0.0.1:8000/api/admin/all-organisers/`
 - Description: Retrieves a list of all organizers in the system for admin viewing
 
 **Detailed View:**
