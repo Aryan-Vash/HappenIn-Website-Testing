@@ -1071,3 +1071,8 @@ class UpdateComplaintStatusView(APIView):
 class AllEventsForAdmin(generics.ListAPIView):
     queryset = Event.objects.all()
     serializer_class = AllEventsForAdminSerializer
+
+#48
+class AllTheOrganisers(generics.ListAPIView):
+    queryset = Organizer.objects.all()
+    serializer_class = AllTheOrganisersSerializer
