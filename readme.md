@@ -899,3 +899,28 @@
     "status_id": 3
 }
 ```
+
+### 47. All Events for Admin
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/admin/all-events/`
+- Description: Retrieves a list of all events in the system for admin viewing
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/admin/all-events/`
+- Method: GET
+- Input: None
+- Response: Returns list of all events with their details including:
+  - eventName
+  - ticketPrice
+  - category
+  - maxAttendees
+  - created_at
+  - startDate
+  - startTime
+  - endDate
+  - endTime
+  - venue details
+  - organizer details
+  - ticketsSold
+  - status
+- Example: Visit `http://127.0.0.1:8000/api/admin/all-events/` to get list of all events
