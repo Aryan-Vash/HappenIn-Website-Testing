@@ -864,3 +864,38 @@
     - Sports/Fitness: Sports, Gaming
   - Only includes users who have attended events in at least 3 different category groups
 - Example: Visit `http://127.0.0.1:8000/api/multi-category-users/` to get list of multi-category attendees
+
+
+### 46. Update Complaint Status
+**Simplified View:**
+- URL: `http://127.0.0.1:8000/api/complaints/<int:staff_id>/<int:complaint_id>/update-status/`
+- Description: Updates the status of a complaint by an admin staff member
+
+**Detailed View:**
+- URL: `http://127.0.0.1:8000/api/complaints/1/2/update-status/` (example with staff_id=1, complaint_id=2)
+- Method: PUT
+- Input: 
+  - staff_id (required): ID of the admin staff in URL path
+  - complaint_id (required): ID of the complaint to update in URL path
+  - Request Body:
+    - status_id (required): Numeric value representing the new status
+      - 1 = Pending
+      - 2 = In Progress
+      - 3 = Resolved
+      - 4 = Dismissed
+- Response: Returns updated complaint details including:
+  - message
+  - complaint_id
+  - new_status
+  - staff_id
+- Note: 
+  - Validates that the staff member exists
+  - Validates that the complaint exists
+  - Validates that the status_id is between 1 and 4
+  - Updates the complaint's staff reference to the admin who made the change
+- Example: Visit `http://127.0.0.1:8000/api/complaints/1/2/update-status/` and send PUT request with body:
+```json
+{
+    "status_id": 3
+}
+```
