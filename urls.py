@@ -156,7 +156,5 @@ urlpatterns = [
     #49
     path('user/<int:user_id>/wallet-topup/', WalletTopUpView.as_view(), name='wallet-topup'),
 
-    #50
-    path('users/<int:user_id>/complaints/', ComplaintHistoryView.as_view(), name='user-complaint-history'),
 
 ]
