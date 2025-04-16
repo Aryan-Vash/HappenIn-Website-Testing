@@ -708,15 +708,3 @@ class WalletTopUpSerializer(serializers.Serializer):
         if value <= 0:
             raise serializers.ValidationError("Amount must be greater than 0.")
         return value
-
-#50
-class ComplaintHistorySerializer(serializers.ModelSerializer):
-    event_name = serializers.CharField(source='event.eventName', read_only=True)
-    staff_email = serializers.CharField(source='staff.emailID', read_only=True, allow_null=True)
-    
-    class Meta:
-        model = Complaint
-        fields = [
-            'id', 'event_name', 'Description', 'Status',
-            'Category', 'Created_At', 'staff_email'
-        ]
