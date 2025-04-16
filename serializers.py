@@ -677,7 +677,7 @@ class ComplaintStatusUpdateSerializer(serializers.Serializer):
 class AdminOrganizerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organizer
-        fields = ['id', 'name']  # adjust fields as per Organizer model
+        fields = ['id', 'username']  # adjust fields as per Organizer model
 
 class AdminVenueSerializer(serializers.ModelSerializer):
     class Meta:
