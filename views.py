@@ -1093,3 +1093,15 @@ class WalletTopUpView(APIView):
             }, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#50
+class ComplaintHistoryView(APIView):
+    def get(self, request, user_id):
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        complaints = Complaint.objects.filter(user=user).order_by('-Created_At')
+        serializer = ComplaintHistorySerializer(complaints, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
